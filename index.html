@@ -86,7 +86,9 @@ h1{font-size:clamp(24px,3vw,32px);margin:0 0 12px} h2{font-size:21px;margin:32px
 .body th,.body td,.persec th,.persec td{border:1px solid var(--line);padding:7px 10px;text-align:start;vertical-align:top}
 .body th,.persec th{background:var(--accent-soft)}
 .body table{display:block;overflow-x:auto}
-pre{direction:ltr;text-align:left;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;white-space:pre}
+main,article,.body{min-width:0}
+.body code{overflow-wrap:anywhere}
+pre{max-width:100%;direction:ltr;text-align:left;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;white-space:pre}
 code{font-family:var(--mono);font-size:.9em;background:var(--code-bg);padding:1px 5px;border-radius:5px;direction:ltr;unicode-bidi:isolate}
 .ex,.note{background:var(--panel);border-inline-start:4px solid var(--accent-2);padding:10px 14px;border-radius:8px}
 .pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:30px}
@@ -100,6 +102,11 @@ input[type=search]{flex:1;min-width:180px}
 .chip{font-size:12px;font-weight:600;background:var(--accent-soft);color:var(--accent);padding:2px 10px;border-radius:999px}
 .chip.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
 .qid{margin-inline-start:auto;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.trbtn{font:inherit;font-size:12.5px;font-weight:600;margin-inline-start:auto;border:1px solid var(--line);background:var(--paper);color:var(--accent);padding:3px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.trbtn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.tr{display:none;font-weight:400;color:var(--muted);font-size:.88em;line-height:1.5;margin-top:4px}
+p .tr{border-inline-start:3px solid var(--accent-soft);padding-inline-start:8px}
+.showtr .tr{display:block}
 .qt{font-weight:600;margin:4px 0 8px}
 .qt.big{font-size:19px;line-height:1.6}
 .optlist{margin:0 0 6px;padding-inline-start:24px}
@@ -158,7 +165,7 @@ input[type=search]{flex:1;min-width:180px}
 .exp{margin:0;font-size:14px}
 @media (max-width:860px){
  #menubtn{display:inline-block}
- .layout{grid-template-columns:1fr}
+ .layout{grid-template-columns:minmax(0,1fr)}
  #nav{position:fixed;top:52px;inset-inline-start:0;width:min(320px,88vw);z-index:30;transform:translateX(-105%);transition:transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.2)}
  [dir="rtl"] #nav{transform:translateX(105%)}
  body.navopen #nav{transform:none}
@@ -1014,7 +1021,7 @@ const UI = {
   unanswered:"بدون إجابة",confirmSubmit:"باقي أسئلة بدون إجابة. هل تريد التسليم؟",yesSubmit:"نعم، سلّم",back:"ارجع للأسئلة",
   result:"النتيجة",correct:"صحيحة",wrong:"خاطئة",score:"الدرجة",bySection:"النتيجة حسب القسم",review:"مراجعة الإجابات",all:"الكل",wrongOnly:"الخاطئة فقط",
   yourAns:"إجابتك",rightAns:"الإجابة الصحيحة",noAns:"لم تُجب",retake:"اختبار جديد",backHome:"الرئيسية",explain:"التوضيح",
-  allSections:"كل الأقسام",search:"ابحث في الأسئلة",showAns:"اعرض الإجابة",tf:"صح أو خطأ",mcq:"اختيار من متعدد",True:"صح",False:"خطأ",
+  trShow:"الترجمة الإنجليزية",trHide:"إخفاء الترجمة",allSections:"كل الأقسام",search:"ابحث في الأسئلة",showAns:"اعرض الإجابة",tf:"صح أو خطأ",mcq:"اختيار من متعدد",True:"صح",False:"خطأ",
   best:"أفضل نتيجة لك",none:"لا يوجد بعد",unit:"الوحدة",readSection:"اقرأ الشرح",prevSec:"القسم السابق",nextSec:"القسم التالي",
   pass:"ممتاز",good:"جيد",weak:"تحتاج مراجعة",reviewSec:"راجع",count:"العدد",answered:"تمت الإجابة",exitQuiz:"خروج",
   results:"نتيجة",shown:"معروض",type:"النوع",anyType:"كل الأنواع",of2:"من",percent:"النسبة",finishPractice:"إنهاء التدريب",practiceOf:"تدريب"},
@@ -1024,7 +1031,7 @@ const UI = {
   unanswered:"unanswered",confirmSubmit:"Some questions are still unanswered. Submit anyway?",yesSubmit:"Yes, submit",back:"Back to questions",
   result:"Result",correct:"correct",wrong:"wrong",score:"Score",bySection:"Score by section",review:"Answer review",all:"All",wrongOnly:"Wrong only",
   yourAns:"Your answer",rightAns:"Correct answer",noAns:"Not answered",retake:"New exam",backHome:"Home",explain:"Explanation",
-  allSections:"All sections",search:"Search questions",showAns:"Show answer",tf:"True / False",mcq:"Multiple choice",True:"True",False:"False",
+  allSections:"All sections",search:"Search questions",showAns:"Show answer",trShow:"Arabic translation",trHide:"Hide translation",tf:"True / False",mcq:"Multiple choice",True:"True",False:"False",
   best:"Your best score",none:"none yet",unit:"Unit",readSection:"Read the explanation",prevSec:"Previous section",nextSec:"Next section",
   pass:"Excellent",good:"Good",weak:"Needs review",reviewSec:"Review",count:"Count",answered:"answered",exitQuiz:"Exit",
   results:"results",shown:"shown",type:"Type",anyType:"All types",of2:"of",percent:"Percent",finishPractice:"Finish practice",practiceOf:"Practice"}
@@ -1042,6 +1049,12 @@ const secNum = id => SECTIONS.findIndex(s=>s.id===id)+1;
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 function opts(q){ if(q.t==="tf") return [t("True"),t("False")]; return st.lang==="ar"? q.ao : q.eo; }
 function qText(q){ return st.lang==="ar"? q.ar : q.en; }
+const TRSET = new Set();
+function trOpts(q){ if(q.t==="tf") return st.lang==="ar"? ["True","False"] : ["صح","خطأ"]; return st.lang==="ar"? q.eo : (q.ao||q.eo); }
+function trQ(q){ return st.lang==="ar"? q.en : q.ar; }
+function trBtn(qi){ const on=TRSET.has(qi); return `<button class="trbtn" data-act="tr" data-qi="${qi}" aria-pressed="${on}">🌐 ${on? t("trHide") : t("trShow")}</button>`; }
+function trLine(text){ return `<span class="tr" dir="auto">${esc(text)}</span>`; }
+function trOpt(q,p,o){ const x=trOpts(q)[p]; return x && x!==o[p] ? `<small class="tr" dir="auto">${esc(x)}</small>` : ""; }
 function qExp(q){ return st.lang==="ar"? q.ae : q.ee; }
 function bestGet(){ try{ return JSON.parse(localStorage.getItem("aiint_best")||"null"); }catch(e){ return null; } }
 function bestSet(v){ try{ const b=bestGet(); if(!b||v>b) localStorage.setItem("aiint_best",JSON.stringify(v)); }catch(e){} }
@@ -1104,8 +1117,8 @@ function viewBank(){
  h += `<p class="muted">${list.length} ${t("shown")} ${t("of2")} ${QB.length}</p><ol class="banklist">`;
  list.forEach(({q,i})=>{
   const o = opts(q);
-  h += `<li><div class="qmeta"><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span><span class="chip ghost">${q.t==="tf"?t("tf"):t("mcq")}</span><span class="qid">#${i+1}</span></div>
-  <p class="qt" dir="auto">${esc(qText(q))}</p><ol class="optlist" type="A">${o.map(x=>`<li dir="auto">${esc(x)}</li>`).join("")}</ol>
+  h += `<li class="${TRSET.has(i)?"showtr":""}"><div class="qmeta"><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span><span class="chip ghost">${q.t==="tf"?t("tf"):t("mcq")}</span><span class="qid">#${i+1}</span>${trBtn(i)}</div>
+  <p class="qt" dir="auto">${esc(qText(q))}${trLine(trQ(q))}</p><ol class="optlist" type="A">${o.map((x,p)=>`<li dir="auto">${esc(x)}${trOpt(q,p,o)}</li>`).join("")}</ol>
   <details class="ans"><summary>${t("showAns")}</summary><p><b>${t("rightAns")}:</b> <span dir="auto">${esc(o[q.a])}</span></p><p class="muted" dir="auto">${esc(qExp(q))}</p></details></li>`;
  });
  return h + `</ol>`;
@@ -1149,12 +1162,12 @@ function viewQuiz(){
  let h = `<div class="quiz"><div class="qhead"><span>${practice? t("practiceOf")+" · "+esc(secTitle(secById(z.sec))) : t("exam")}</span><button class="link" data-act="exit">${t("exitQuiz")}</button></div>
  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${answered}"><i style="width:${answered/n*100}%"></i></div>
  <p class="muted">${t("q")} ${z.idx+1} ${t("of")} ${n} · ${answered} ${t("answered")}</p>
- <div class="qcard"><div class="qmeta"><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span><span class="chip ghost">${q.t==="tf"?t("tf"):t("mcq")}</span></div>
- <p class="qt big" dir="auto">${esc(qText(q))}</p><div class="opts" role="radiogroup">`;
+ <div class="qcard ${TRSET.has(it.qi)?"showtr":""}"><div class="qmeta"><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span><span class="chip ghost">${q.t==="tf"?t("tf"):t("mcq")}</span>${trBtn(it.qi)}</div>
+ <p class="qt big" dir="auto">${esc(qText(q))}${trLine(trQ(q))}</p><div class="opts" role="radiogroup">`;
  it.perm.forEach((p,k)=>{
   let cls = it.ans===p ? "sel" : "";
   if(locked){ if(p===q.a) cls="ok"; else if(it.ans===p) cls="bad"; }
-  h += `<button class="opt ${cls}" role="radio" aria-checked="${it.ans===p}" data-act="pick" data-p="${p}" ${locked?"disabled":""}><span class="ol">${"ABCD"[k]}</span><span dir="auto">${esc(o[p])}</span></button>`;
+  h += `<button class="opt ${cls}" role="radio" aria-checked="${it.ans===p}" data-act="pick" data-p="${p}" ${locked?"disabled":""}><span class="ol">${"ABCD"[k]}</span><span dir="auto">${esc(o[p])}${trOpt(q,p,o)}</span></button>`;
  });
  h += `</div>`;
  if(locked) h += `<div class="feedback ${it.ans===q.a?"good":"badfb"}"><b>${it.ans===q.a? "✓ "+t("correct") : "✗ "+t("wrong")}</b><p dir="auto">${esc(qExp(q))}</p></div>`;
@@ -1184,8 +1197,8 @@ function viewResults(){
  z.items.forEach((x,k)=>{
   const q=QB[x.qi], o=opts(q), ok = x.ans===q.a;
   if(st.reviewFilter==="wrong" && ok) return;
-  h += `<li value="${k+1}" class="${ok?"rok":"rbad"}"><div class="qmeta"><span class="mark">${ok?"✓":"✗"}</span><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span></div><p class="qt" dir="auto">${esc(qText(q))}</p>
-  <ul class="ropts">${x.perm.map((p,i)=>`<li class="${p===q.a?"isright":""} ${x.ans===p&&!ok?"iswrong":""}"><span class="ol">${"ABCD"[i]}</span><span dir="auto">${esc(o[p])}</span>${p===q.a?` <em>${t("rightAns")}</em>`:""}${x.ans===p&&!ok?` <em>${t("yourAns")}</em>`:""}</li>`).join("")}</ul>
+  h += `<li value="${k+1}" class="${ok?"rok":"rbad"} ${TRSET.has(x.qi)?"showtr":""}"><div class="qmeta"><span class="mark">${ok?"✓":"✗"}</span><span class="chip">${secNum(q.s)}. ${esc(secTitle(secById(q.s)))}</span>${trBtn(x.qi)}</div><p class="qt" dir="auto">${esc(qText(q))}${trLine(trQ(q))}</p>
+  <ul class="ropts">${x.perm.map((p,i)=>`<li class="${p===q.a?"isright":""} ${x.ans===p&&!ok?"iswrong":""}"><span class="ol">${"ABCD"[i]}</span><span dir="auto">${esc(o[p])}${trOpt(q,p,o)}</span>${p===q.a?` <em>${t("rightAns")}</em>`:""}${x.ans===p&&!ok?` <em>${t("yourAns")}</em>`:""}</li>`).join("")}</ul>
   ${x.ans===null?`<p class="muted">${t("noAns")}</p>`:""}<p class="exp" dir="auto"><b>${t("explain")}:</b> ${esc(qExp(q))}</p></li>`;
  });
  h += `</ol><div class="qnav"><button class="btn primary" data-act="${z.mode==="exam"?"startexam":"practice"}" data-sec="${z.sec||""}">${t("retake")}</button><a class="btn" href="#home">${t("backHome")}</a></div></div>`;
@@ -1212,6 +1225,9 @@ document.addEventListener("click", e=>{
  const b = e.target.closest("[data-act]"); if(!b) return; const a=b.dataset.act, z=st.quiz;
  if(a==="startexam"){ st.quiz=buildExam(); if(location.hash!=="#exam") location.hash="exam"; else render(); window.scrollTo(0,0); return; }
  if(a==="practice"){ st.quiz=buildPractice(b.dataset.sec); if(location.hash!=="#practice") location.hash="practice"; else render(); window.scrollTo(0,0); return; }
+ if(a==="tr"){ const qi=parseInt(b.dataset.qi,10); const on=!TRSET.has(qi); if(on) TRSET.add(qi); else TRSET.delete(qi);
+   const box=b.closest(".qcard, li"); if(box) box.classList.toggle("showtr", on);
+   b.setAttribute("aria-pressed", on); b.textContent="🌐 "+(on? t("trHide") : t("trShow")); return; }
  if(!z) return;
  const it = z.items[z.idx];
  if(a==="pick"){ if(z.mode==="practice" && it.ans!==null) return; it.ans=parseInt(b.dataset.p,10); }
