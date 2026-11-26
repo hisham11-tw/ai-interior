@@ -1048,6 +1048,7 @@ const unitTitle = u => st.lang==="ar"? u.ar : u.en;
 const secNum = id => SECTIONS.findIndex(s=>s.id===id)+1;
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 function opts(q){ if(q.t==="tf") return [t("True"),t("False")]; return st.lang==="ar"? q.ao : q.eo; }
+function normS(s){ return String(s).toLowerCase().replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ").trim(); }
 function qText(q){ return st.lang==="ar"? q.ar : q.en; }
 const TRSET = new Set();
 function trOpts(q){ if(q.t==="tf") return st.lang==="ar"? ["True","False"] : ["صح","خطأ"]; return st.lang==="ar"? q.eo : (q.ao||q.eo); }
@@ -1113,7 +1114,7 @@ function viewBank(){
   <label for="ftype">${t("type")}</label><select id="ftype"><option value="all">${t("anyType")}</option><option value="m" ${st.bankType==="m"?"selected":""}>${t("mcq")}</option><option value="tf" ${st.bankType==="tf"?"selected":""}>${t("tf")}</option></select>
   <label for="fq" class="vh">${t("search")}</label><input id="fq" type="search" placeholder="${t("search")}" value="${esc(st.bankQ)}"></div>`;
  const qq = st.bankQ.trim().toLowerCase();
- const list = QB.map((q,i)=>({q,i})).filter(({q})=> (st.bankSec==="all"||q.s===st.bankSec) && (st.bankType==="all"||q.t===st.bankType) && (!qq || (q.en+" "+q.ar+" "+q.eo.join(" ")+" "+(q.ao||[]).join(" ")).toLowerCase().includes(qq)));
+ const list = QB.map((q,i)=>({q,i})).filter(({q})=> (st.bankSec==="all"||q.s===st.bankSec) && (st.bankType==="all"||q.t===st.bankType) && (!qq || normS(q.en+" "+q.ar+" "+(q.eo||[]).join(" ")+" "+(q.ao||[]).join(" ")).includes(normS(qq))));
  h += `<p class="muted">${list.length} ${t("shown")} ${t("of2")} ${QB.length}</p><ol class="banklist">`;
  list.forEach(({q,i})=>{
   const o = opts(q);
